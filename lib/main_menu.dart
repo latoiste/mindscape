@@ -1,12 +1,16 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
+import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
+import 'package:mindscape/styles/button_styles.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold (
       backgroundColor: Colors.black,
       body: Center(
@@ -22,15 +26,47 @@ class MainMenu extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            FloatingActionButton.extended(
-              label: const Text("Play"),
-              onPressed: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => GameWidget(game: MainGame())),
-                );
-              }
-            ),
+            SizedBox(
+              width: screenWidth * 0.3,
+              child: Column(
+                spacing: 10,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    style: primaryButtonStyle,
+                    child: const Text("Play"),
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => GameWidget(
+                          game: MainGame(),
+                          overlayBuilderMap: {
+                            "NervousBar": (context, MainGame game) {
+                              return NervousBar(nervousValue: game.nervousValue);
+                            } 
+                          },
+                        )),
+                      );
+                    }
+                  ),
+                  ElevatedButton(
+                    style: primaryButtonStyle,
+                    child: const Text("Options"),
+                    onPressed: () {}
+                  ),
+                  ElevatedButton(
+                    style: primaryButtonStyle,
+                    child: const Text("Credits"),
+                    onPressed: () {}
+                  ),
+                  ElevatedButton(
+                    style: primaryButtonStyle,
+                    child: const Text("Quit"),
+                    onPressed: () {}
+                  ),
+                ]
+              ),
+            )
           ],
         ),
       ),
