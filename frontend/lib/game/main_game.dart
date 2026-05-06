@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
@@ -5,11 +7,13 @@ import 'package:mindscape/game/scenario/scenario.dart';
 
 class MainGame extends FlameGame with HasCollisionDetection {
   late int score;
-  late int prevIndex;
-  final ValueNotifier<double> nervousValue = ValueNotifier(0);
-  // final String nervousBarIdentifier = 'NervousBar';
+  int prevIndex = -1;
 
-  static const int scenarioAmount = 3;
+  // overlay builder maps dependencies
+  late ValueNotifier<double> nervousValue;
+  // ====================
+
+  static const int scenarioAmount = 1;
 
   @override
   // ignore: overridden_fields
@@ -17,8 +21,6 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-    // pick a random index
-    // store the index for scenarios somewhere
     var scenario = getRandomScenario();
     switchScenario(newScreen: scenario);
   }
@@ -28,24 +30,20 @@ class MainGame extends FlameGame with HasCollisionDetection {
     add(newScreen);
   }
 
-  Scenario getRandomScenario({Scenario? prevScenario}) {
-    return PresentationScenario(nervousValue: nervousValue);
-    // var random = Random();
-    // int index = random.nextInt(scenarioAmount);
+  Scenario getRandomScenario() {
+    var random = Random();
+    var index = random.nextInt(scenarioAmount);
 
-    // if (prevIndex == index) index = (index + 1) % scenarioAmount;
+    if (prevIndex == index) index = (index + 1) % scenarioAmount;
 
-    // prevIndex = index;
+    prevIndex = index;
 
-
-    // switch (index) {
-    //   case 0:
-    //     return PresentationScenario();
-    //   case 1:
-    //     return SadScenario();
-    //   case 2:
-    //   default:
-    //     return AngryScenario();
-    // }
+    switch (index) {
+      case 0:
+      default: // ini biar bisa return non nullable
+        nervousValue = ValueNotifier(0);
+        // TODO: bikin timeSecond dynamic
+        return PresentationScenario(nervousValue: nervousValue, timeSecond: 5);
+    }
   }
 }

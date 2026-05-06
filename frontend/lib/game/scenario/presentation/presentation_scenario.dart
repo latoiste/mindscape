@@ -6,13 +6,13 @@ import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
 class PresentationScenario extends Scenario with TapCallbacks {
-  late final Heart feather;
+  late final Heart heart;
   late final BreatheBox breatheBox;
   late final NervousBar nervousBar;
 
   final ValueNotifier<double> nervousValue;
 
-  PresentationScenario({required this.nervousValue});
+  PresentationScenario({required super.timeSecond, required this.nervousValue});
 
   @override
   Future<void> onLoad() async {
@@ -20,11 +20,11 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
     nervousValue.value = 0;
 
-    feather = Heart();
+    heart = Heart();
     breatheBox = BreatheBox(nervousValue: nervousValue);
 
     add(breatheBox);
-    add(feather);
+    add(heart);
     game.overlays.add('NervousBar');
   }
 
@@ -43,21 +43,21 @@ class PresentationScenario extends Scenario with TapCallbacks {
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    feather.pushPower = 400;
+    heart.pushPower = 400;
     print("onTapDown called");
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
-    feather.pushPower = 0;
+    heart.pushPower = 0;
     print("onTapUp called");
   }
 
   @override
   void onTapCancel(TapCancelEvent event) {
     super.onTapCancel(event);
-    feather.pushPower = 0;
+    heart.pushPower = 0;
     print("onTapCancel called");
   }
 }
