@@ -1,14 +1,17 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 
 abstract class Scenario extends PositionComponent with HasGameReference<MainGame> {
   late final Sprite background;
   // late final 
-  double timeSecond;
+  final double timeSecond;
+  final ValueNotifier<double> timerNotifier;
 
-  Scenario({required this.timeSecond});
+  Scenario({required this.timeSecond}) :
+    timerNotifier = ValueNotifier(timeSecond);
 
   void onWin();
   void onFail();
@@ -17,18 +20,20 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   Future<void> onLoad() async {
     await super.onLoad();
     size = game.size;
+
+    game.overlays.add('TimerDisplay');
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    // if (timeSecond <= 0) {
-    //   return;
-    // }
-    timeSecond = clampDouble(timeSecond - dt, 0, timeSecond);
+    if (timerNotifier.value <= 0) {
+      return;
+    }
+    timerNotifier.value = clampDouble(timerNotifier.value - dt, 0, timerNotifier.value);
     
-    if (timeSecond <= 0) {
+    if (timerNotifier.value <= 0) {
       onFail();
     }
   }
@@ -37,5 +42,6 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   void onRemove() {
     // need to dispose everything
     background.image.dispose();
+    timerNotifier.dispose();
   }
 }

@@ -8,9 +8,10 @@ import 'package:mindscape/game/scenario/scenario.dart';
 class MainGame extends FlameGame with HasCollisionDetection {
   late int score;
   int prevIndex = -1;
+  late Scenario currentScenario;
 
   // overlay builder maps dependencies
-  late ValueNotifier<double> nervousValue;
+  final ValueNotifier<double> nervousValue = ValueNotifier(0);
   // ====================
 
   static const int scenarioAmount = 1;
@@ -21,8 +22,8 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-    var scenario = getRandomScenario();
-    switchScenario(newScreen: scenario);
+    currentScenario = getRandomScenario();
+    switchScenario(newScreen: currentScenario);
   }
 
   void switchScenario({Scenario? oldScreen, required Scenario newScreen}) {
@@ -41,9 +42,15 @@ class MainGame extends FlameGame with HasCollisionDetection {
     switch (index) {
       case 0:
       default: // ini biar bisa return non nullable
-        nervousValue = ValueNotifier(0);
+        nervousValue.value = 0;
         // TODO: bikin timeSecond dynamic
         return PresentationScenario(nervousValue: nervousValue, timeSecond: 5);
     }
+  }
+
+  @override
+  void onRemove() {
+    super.onRemove();
+    nervousValue.dispose();
   }
 }

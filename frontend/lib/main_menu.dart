@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
+import 'package:mindscape/game/timer_display.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
 class MainMenu extends StatelessWidget {
@@ -41,9 +42,8 @@ class MainMenu extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => GameWidget(
                           game: MainGame(),
                           overlayBuilderMap: {
-                            "NervousBar": (context, MainGame game) {
-                              return NervousBar(nervousValue: game.nervousValue);
-                            } 
+                            "NervousBar": (context, MainGame game) => NervousBar(nervousValue: game.nervousValue),
+                            "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier)
                           },
                         )),
                       );
