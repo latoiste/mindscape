@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class TimerDisplay extends StatelessWidget {
@@ -17,7 +19,7 @@ class TimerDisplay extends StatelessWidget {
           valueListenable: timeSecond, 
           builder: (context, value, child) {
             return CircularProgressIndicator(
-              value: value/durationSecond,
+              value: clampDouble(value/durationSecond, 0, 1),
               backgroundColor: Colors.blue[50],
               color: Colors.blue[300],
               strokeWidth: 20.0,
