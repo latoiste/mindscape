@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
+enum GameResult {
+  ongoing,
+  win,
+  lose,
+}
+
 class MainGame extends FlameGame with HasCollisionDetection {
-  late int score;
+  int score = 0;
   int prevIndex = -1;
   late Scenario currentScenario;
 
@@ -22,12 +28,30 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
+    startGame();
+  }
+
+  void startGame() {
+    score = 0;
+
     currentScenario = getRandomScenario();
     switchScenario(newScreen: currentScenario);
+    resumeEngine();
+  }
+
+  void gameOver() {
+    remove(currentScenario);
+    pauseEngine();
+    overlays.add('GameOver');
   }
 
   void switchScenario({Scenario? oldScreen, required Scenario newScreen}) {
-    if (oldScreen != null) remove(oldScreen);
+    if (oldScreen != null) {
+      oldScreen.gameEnd.removeListener(onGameEnd);
+      remove(oldScreen);
+    }
+
+    newScreen.gameEnd.addListener(onGameEnd);
     add(newScreen);
   }
 
@@ -48,9 +72,27 @@ class MainGame extends FlameGame with HasCollisionDetection {
     }
   }
 
+  void onGameEnd() {
+    overlays.clear();
+
+    switch (currentScenario.gameEnd.value) {
+      case GameResult.win:
+        currentScenario.onWin();
+        score++;
+      case GameResult.lose:
+        currentScenario.onLose();
+        gameOver();
+      case GameResult.ongoing:
+        return;
+    }
+  }
+
   @override
   void onRemove() {
-    super.onRemove();
+    overlays.clear();
     nervousValue.dispose();
+    currentScenario.gameEnd.removeListener(onGameEnd);
+
+    super.onRemove();
   }
 }

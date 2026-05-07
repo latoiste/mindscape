@@ -2,7 +2,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
-import 'package:mindscape/game/timer_display.dart';
+import 'package:mindscape/game/screen/game_over.dart';
+import 'package:mindscape/game/ui/timer_display.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
 class MainMenu extends StatelessWidget {
@@ -11,6 +12,7 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold (
       backgroundColor: Colors.black,
@@ -19,11 +21,11 @@ class MainMenu extends StatelessWidget {
           spacing: 50,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "Mindscape", 
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 32,
+                fontSize: screenHeight * 0.15,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -43,7 +45,8 @@ class MainMenu extends StatelessWidget {
                           game: MainGame(),
                           overlayBuilderMap: {
                             "NervousBar": (context, MainGame game) => NervousBar(nervousValue: game.nervousValue),
-                            "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier)
+                            "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier),
+                            "GameOver": (context, MainGame game) => GameOverScreen(score: game.score, game: game),
                           },
                         )),
                       );

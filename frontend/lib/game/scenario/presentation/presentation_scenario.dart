@@ -29,7 +29,7 @@ class PresentationScenario extends Scenario with TapCallbacks {
   }
 
   @override
-  void onFail() {
+  void onLose() {
     // TODO: implement onFail
     // Play losing animaton??
   }
@@ -59,5 +59,13 @@ class PresentationScenario extends Scenario with TapCallbacks {
     super.onTapCancel(event);
     heart.pushPower = 0;
     print("onTapCancel called");
+  }
+
+  @override
+  void onRemove() {
+    remove(breatheBox);
+    remove(heart);
+    
+    super.onRemove();
   }
 }

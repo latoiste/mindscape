@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 
 abstract class Scenario extends PositionComponent with HasGameReference<MainGame> {
-  late final Sprite background;
-  // late final 
+  // late final Sprite background;
   final double timeSecond;
   final ValueNotifier<double> timerNotifier;
+  final ValueNotifier<GameResult> gameEnd;
 
-  Scenario({required this.timeSecond}) :
-    timerNotifier = ValueNotifier(timeSecond);
+  Scenario({required this.timeSecond}) : 
+    timerNotifier = ValueNotifier(timeSecond),
+    gameEnd = ValueNotifier(GameResult.ongoing);
 
   void onWin();
-  void onFail();
+  void onLose();
   
   @override
   Future<void> onLoad() async {
@@ -34,14 +35,14 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
     timerNotifier.value = clampDouble(timerNotifier.value - dt, 0, timerNotifier.value);
     
     if (timerNotifier.value <= 0) {
-      onFail();
+      gameEnd.value = GameResult.lose;
     }
   }
 
   @override
   void onRemove() {
-    // need to dispose everything
-    background.image.dispose();
+    // background.image.dispose();
     timerNotifier.dispose();
+    gameEnd.dispose();
   }
 }
