@@ -2,7 +2,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
-import 'package:mindscape/game/screen/game_over.dart';
+import 'package:mindscape/game/screen/lose_screen.dart';
+import 'package:mindscape/game/screen/win_screen.dart';
 import 'package:mindscape/game/ui/timer_display.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
@@ -46,7 +47,8 @@ class MainMenu extends StatelessWidget {
                           overlayBuilderMap: {
                             "NervousBar": (context, MainGame game) => NervousBar(nervousValue: game.nervousValue),
                             "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier),
-                            "GameOver": (context, MainGame game) => GameOverScreen(score: game.score, game: game),
+                            "LoseScreen": (context, MainGame game) => LoseScreen(score: game.score, game: game),
+                            "WinScreen": (context, MainGame game) => WinScreen(game: game),
                           },
                         )),
                       );

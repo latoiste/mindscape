@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
-class GameOverScreen extends StatelessWidget {
+class LoseScreen extends StatelessWidget {
   final int score;
   final MainGame game;
 
-  const GameOverScreen({super.key, required this.score, required this.game});
+  const LoseScreen({super.key, required this.score, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class GameOverScreen extends StatelessWidget {
             style: primaryButtonStyle,
             child: const Text("Play Again"),
             onPressed: () {
-              game.overlays.remove('GameOver');
+              game.overlays.remove('LoseScreen');
               game.startGame();
             }
           ),

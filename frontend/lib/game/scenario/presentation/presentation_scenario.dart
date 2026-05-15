@@ -1,5 +1,6 @@
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
+import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/breathe_box.dart';
 import 'package:mindscape/game/scenario/presentation/heart.dart';
 import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
@@ -18,7 +19,7 @@ class PresentationScenario extends Scenario with TapCallbacks {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    nervousValue.value = 0;
+    nervousValue.addListener(onNervousValueChanged);
 
     heart = Heart();
     breatheBox = BreatheBox(nervousValue: nervousValue);
@@ -61,10 +62,18 @@ class PresentationScenario extends Scenario with TapCallbacks {
     print("onTapCancel called");
   }
 
+  void onNervousValueChanged() {
+    if (nervousValue.value >= 1) {
+      super.gameEnd.value = GameResult.win;
+    }
+  }
+
   @override
   void onRemove() {
     remove(breatheBox);
     remove(heart);
+
+    nervousValue.removeListener(onNervousValueChanged);
     
     super.onRemove();
   }

@@ -35,24 +35,38 @@ class MainGame extends FlameGame with HasCollisionDetection {
     score = 0;
 
     currentScenario = getRandomScenario();
-    switchScenario(newScreen: currentScenario);
+    switchScenario(newScenario: currentScenario);
+    resumeEngine();
+  }
+
+  void win() {
+    score++;
+    pauseEngine();
+    overlays.add('WinScreen');
+  }
+
+  void nextScenario() {
+    Scenario newScenario = getRandomScenario();
+    switchScenario(oldScenario: currentScenario, newScenario: newScenario);
+    currentScenario = newScenario;
+
     resumeEngine();
   }
 
   void gameOver() {
-    remove(currentScenario);
     pauseEngine();
-    overlays.add('GameOver');
+    remove(currentScenario);
+    overlays.add('LoseScreen');
   }
 
-  void switchScenario({Scenario? oldScreen, required Scenario newScreen}) {
-    if (oldScreen != null) {
-      oldScreen.gameEnd.removeListener(onGameEnd);
-      remove(oldScreen);
+  void switchScenario({Scenario? oldScenario, required Scenario newScenario}) {
+    if (oldScenario != null) {
+      oldScenario.gameEnd.removeListener(onGameEnd);
+      remove(oldScenario);
     }
 
-    newScreen.gameEnd.addListener(onGameEnd);
-    add(newScreen);
+    newScenario.gameEnd.addListener(onGameEnd);
+    add(newScenario);
   }
 
   Scenario getRandomScenario() {
@@ -68,17 +82,18 @@ class MainGame extends FlameGame with HasCollisionDetection {
       default: // ini biar bisa return non nullable
         nervousValue.value = 0;
         // TODO: bikin timeSecond dynamic
-        return PresentationScenario(nervousValue: nervousValue, timeSecond: 5);
+        return PresentationScenario(nervousValue: nervousValue, timeSecond: 50);
     }
   }
 
   void onGameEnd() {
     overlays.clear();
+    // print("CLEARRR WOIII");
 
     switch (currentScenario.gameEnd.value) {
       case GameResult.win:
         currentScenario.onWin();
-        score++;
+        win();
       case GameResult.lose:
         currentScenario.onLose();
         gameOver();
