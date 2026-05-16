@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
+import 'package:mindscape/game/scenario/sad/sad_scenario.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
 enum GameResult {
@@ -20,7 +21,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
   final ValueNotifier<double> nervousValue = ValueNotifier(0);
   // ====================
 
-  static const int scenarioAmount = 1;
+  static const int scenarioAmount = 2;
 
   @override
   // ignore: overridden_fields
@@ -28,7 +29,10 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-    startGame();
+    // startGame();
+
+    currentScenario = SadScenario(timeSecond: 50);
+    add(currentScenario);
   }
 
   void startGame() {
@@ -79,6 +83,8 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
     switch (index) {
       case 0:
+        return SadScenario(timeSecond: 50);
+      case 1:
       default: // ini biar bisa return non nullable
         nervousValue.value = 0;
         // TODO: bikin timeSecond dynamic
@@ -88,7 +94,6 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   void onGameEnd() {
     overlays.clear();
-    // print("CLEARRR WOIII");
 
     switch (currentScenario.gameEnd.value) {
       case GameResult.win:
