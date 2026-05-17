@@ -1,5 +1,5 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/sad/paper.dart';
 import 'package:mindscape/game/scenario/sad/speech_bubble.dart';
 import 'package:mindscape/game/scenario/sad/word.dart';
@@ -11,36 +11,36 @@ class SadScenario extends Scenario {
   // late final Word word;
   final int wordAmount;
   final ValueNotifier<Word?> wordSnapNotifier;
+  int wordsSnapped;
 
   SadScenario({required super.timeSecond}) :
     wordAmount = 5,
-    wordSnapNotifier = ValueNotifier(null);
+    wordSnapNotifier = ValueNotifier(null),
+    wordsSnapped = 0;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    speechBubble = SpeechBubble();
+    speechBubble = SpeechBubble(wordAmount: wordAmount, wordSnapNotifier: wordSnapNotifier);
     paper = Paper(wordAmount: wordAmount);
-    // word = Word(originalPosition: Vector2(game.size.x/2, game.size.y/2), wordSnapNotifier: wordSnapNotifier);
-    
 
-    wordSnapNotifier.addListener(snapWordToPaper);
-    wordSnapNotifier.addListener(speechBubble.spawnNewWord);
+    wordSnapNotifier.addListener(onSnapWordToPaper);
+    wordSnapNotifier.addListener(speechBubble.onWordMoved);
 
-    add(speechBubble);
     add(paper);
-    double x = 100;
-    double y = 100;
-    for (int i = 0; i < wordAmount; i++) {
-      Word word = Word(originalPosition: Vector2(x, y + (50 * i)), wordSnapNotifier: wordSnapNotifier);
-      add(word);
-    }
+    add(speechBubble);
   }
 
-  void snapWordToPaper() {
+  void onSnapWordToPaper() {
     Word word = wordSnapNotifier.value!;
     paper.snapWord(word);
+    print(word.position);
+    wordsSnapped++;
+
+    if (wordsSnapped >= wordAmount) {
+      super.gameEnd.value = GameResult.win;
+    }
   }
 
   @override
@@ -55,8 +55,8 @@ class SadScenario extends Scenario {
 
   @override
   void onRemove() {
-    wordSnapNotifier.removeListener(snapWordToPaper);
-    wordSnapNotifier.removeListener(speechBubble.spawnNewWord);
+    wordSnapNotifier.removeListener(onSnapWordToPaper);
+    wordSnapNotifier.removeListener(speechBubble.onWordMoved);
     wordSnapNotifier.dispose();
 
     super.onRemove();

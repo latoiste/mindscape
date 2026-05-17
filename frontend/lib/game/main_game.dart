@@ -29,10 +29,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-    // startGame();
-
-    currentScenario = SadScenario(timeSecond: 50);
-    add(currentScenario);
+    startGame();
   }
 
   void startGame() {
