@@ -25,7 +25,7 @@ class Paper extends SpriteComponent with HasGameReference<MainGame>, CollisionCa
     snapLocations = generateSnapLocations(position);
     sprite = await game.loadSprite('paper.png');
     
-    add(RectangleHitbox());
+    add(RectangleHitbox(isSolid: true));
   }
 
   List<Vector2> generateSnapLocations(Vector2 position) {
@@ -58,7 +58,7 @@ class Paper extends SpriteComponent with HasGameReference<MainGame>, CollisionCa
   @override
   void onCollisionEnd(PositionComponent other) {
     super.onCollisionEnd(other);
-
+    
     if (other is Word) {
       print("exit paper");
       other.insidePaper = false;

@@ -25,7 +25,7 @@ class Word extends SpriteComponent with HasGameReference<MainGame>, DragCallback
 
     sprite = await game.loadSprite('images.png');
 
-    add(RectangleHitbox(collisionType: CollisionType.passive, size: Vector2(size.x + 50, size.y)));
+    add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 
   @override
