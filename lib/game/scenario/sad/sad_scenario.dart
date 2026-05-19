@@ -39,7 +39,7 @@ class SadScenario extends Scenario {
     wordsSnapped++;
 
     if (wordsSnapped >= wordAmount) {
-      super.gameEnd.value = GameResult.win;
+      super.gameEndNotifier.value = GameResult.win;
     }
   }
 

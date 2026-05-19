@@ -81,13 +81,13 @@ class AngryScenario extends Scenario {
     Item item = childItemNotifier.value!;
 
     if (!item.safeToBreak) {
-      super.gameEnd.value = GameResult.lose;
+      super.gameEndNotifier.value = GameResult.lose;
       return;
     }
     safeItemsCount--;
     
     if (safeItemsCount <= 0) {
-      super.gameEnd.value = GameResult.win;
+      super.gameEndNotifier.value = GameResult.win;
     }
   }
 

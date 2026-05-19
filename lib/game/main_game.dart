@@ -66,11 +66,11 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   void switchScenario({Scenario? oldScenario, required Scenario newScenario}) {
     if (oldScenario != null) {
-      oldScenario.gameEnd.removeListener(onGameEnd);
+      oldScenario.gameEndNotifier.removeListener(onGameEnd);
       remove(oldScenario);
     }
 
-    newScenario.gameEnd.addListener(onGameEnd);
+    newScenario.gameEndNotifier.addListener(onGameEnd);
     add(newScenario);
   }
 
@@ -96,7 +96,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
   void onGameEnd() {
     overlays.clear();
 
-    switch (currentScenario.gameEnd.value) {
+    switch (currentScenario.gameEndNotifier.value) {
       case GameResult.win:
         currentScenario.onWin();
         win();
@@ -112,7 +112,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
   void onRemove() {
     overlays.clear();
     nervousValue.dispose();
-    currentScenario.gameEnd.removeListener(onGameEnd);
+    currentScenario.gameEndNotifier.removeListener(onGameEnd);
 
     super.onRemove();
   }

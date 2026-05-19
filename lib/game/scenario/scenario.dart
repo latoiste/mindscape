@@ -8,11 +8,11 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   // late final Sprite background;
   final double timeSecond;
   final ValueNotifier<double> timerNotifier;
-  final ValueNotifier<GameResult> gameEnd;
+  final ValueNotifier<GameResult> gameEndNotifier;
 
   Scenario({required this.timeSecond}) : 
     timerNotifier = ValueNotifier(timeSecond),
-    gameEnd = ValueNotifier(GameResult.ongoing);
+    gameEndNotifier = ValueNotifier(GameResult.ongoing);
 
   void onWin();
   void onLose();
@@ -35,7 +35,7 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
     timerNotifier.value = clampDouble(timerNotifier.value - dt, 0, timerNotifier.value);
     
     if (timerNotifier.value <= 0) {
-      gameEnd.value = GameResult.lose;
+      gameEndNotifier.value = GameResult.lose;
     }
   }
 
@@ -43,6 +43,6 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   void onRemove() {
     // background.image.dispose();
     timerNotifier.dispose();
-    gameEnd.dispose();
+    gameEndNotifier.dispose();
   }
 }
