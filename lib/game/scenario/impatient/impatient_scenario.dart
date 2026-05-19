@@ -19,11 +19,11 @@ class ImpatientScenario extends Scenario with TapCallbacks {
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
 
-    super.gameEnd.value = GameResult.lose;
+    super.gameEndNotifier.value = GameResult.lose;
   }
 
   @override
   void onTimerEnd() {
-    super.gameEnd.value = GameResult.win;
+    super.gameEndNotifier.value = GameResult.win;
   }
 }
