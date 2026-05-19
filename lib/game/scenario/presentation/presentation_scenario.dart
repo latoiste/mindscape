@@ -64,7 +64,7 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
   void onNervousValueChanged() {
     if (nervousValue.value >= 1) {
-      super.gameEnd.value = GameResult.win;
+      super.gameEndNotifier.value = GameResult.win;
     }
   }
 
