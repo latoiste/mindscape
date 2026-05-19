@@ -35,8 +35,12 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
     timerNotifier.value = clampDouble(timerNotifier.value - dt, 0, timerNotifier.value);
     
     if (timerNotifier.value <= 0) {
-      gameEnd.value = GameResult.lose;
+      onTimerEnd();
     }
+  }
+
+  void onTimerEnd() {
+      gameEnd.value = GameResult.lose;
   }
 
   @override
