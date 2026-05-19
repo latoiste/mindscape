@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:mindscape/game/scenario/angry/angry_scenario.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
 import 'package:mindscape/game/scenario/sad/sad_scenario.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
@@ -29,7 +30,10 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-    startGame();
+    // startGame();
+
+    currentScenario = AngryScenario(timeSecond: 10);
+    switchScenario(newScenario: currentScenario);
   }
 
   void startGame() {
