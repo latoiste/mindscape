@@ -5,10 +5,14 @@ import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
 import 'package:mindscape/game/screen/lose_screen.dart';
 import 'package:mindscape/game/screen/win_screen.dart';
 import 'package:mindscape/game/ui/timer_display.dart';
+import 'package:mindscape/dialogs/login_dialog.dart';
+import 'package:mindscape/dialogs/resgiter_dialog.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class MainMenu extends StatelessWidget {
             SizedBox(
               width: screenWidth * 0.3,
               child: Column(
-                spacing: 10,
+                spacing: screenHeight * 0.025,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
@@ -56,13 +60,23 @@ class MainMenu extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: primaryButtonStyle,
-                    child: const Text("Options"),
-                    onPressed: () {}
+                    child: const Text("Login"),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => LoginDialog(),
+                      );
+                    }
                   ),
                   ElevatedButton(
                     style: primaryButtonStyle,
-                    child: const Text("Credits"),
-                    onPressed: () {}
+                    child: const Text("Register"),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => RegisterDialog(),
+                      );
+                    }
                   ),
                   ElevatedButton(
                     style: primaryButtonStyle,
