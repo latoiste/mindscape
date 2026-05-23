@@ -1,23 +1,16 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:mindscape/game/main_game.dart';
-import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
-import 'package:mindscape/game/screen/lose_screen.dart';
-import 'package:mindscape/game/screen/win_screen.dart';
-import 'package:mindscape/game/ui/timer_display.dart';
-import 'package:mindscape/dialogs/login_dialog.dart';
-import 'package:mindscape/dialogs/resgiter_dialog.dart';
-import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/auth/auth_provider.dart';
+import 'package:mindscape/logged_in_menu.dart';
+import 'package:mindscape/logged_out_menu.dart';
+import 'package:provider/provider.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    final auth = context.watch<AuthProvider>();
 
     return Scaffold (
       backgroundColor: Colors.black,
@@ -34,58 +27,9 @@ class MainMenu extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(
-              width: screenWidth * 0.3,
-              child: Column(
-                spacing: screenHeight * 0.025,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Play"),
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => GameWidget(
-                          game: MainGame(),
-                          overlayBuilderMap: {
-                            "NervousBar": (context, MainGame game) => NervousBar(nervousValue: game.nervousValue),
-                            "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier),
-                            "LoseScreen": (context, MainGame game) => LoseScreen(score: game.score, game: game),
-                            "WinScreen": (context, MainGame game) => WinScreen(game: game),
-                          },
-                        )),
-                      );
-                    }
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Login"),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => LoginDialog(),
-                      );
-                    }
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Register"),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => RegisterDialog(),
-                      );
-                    }
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Quit"),
-                    onPressed: () {}
-                  ),
-                ]
-              ),
-            )
+            auth.loggedIn ?
+            LoggedInMenu() :
+            LoggedOutMenu()
           ],
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/main_menu.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +11,12 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
-      runApp(const MyApp());  
+      runApp(
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+          child: const MyApp(),
+        ),
+      );
     }
   );
 }
