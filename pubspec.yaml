@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flame: ^1.35.1
   provider: ^6.1.5+1
+  http: ^1.6.0
+  flutter_secure_storage: ^10.3.0
 
 dev_dependencies:
   flutter_test:
