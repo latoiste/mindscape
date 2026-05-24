@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/heart.dart';
@@ -13,19 +14,19 @@ class BreatheBox extends SpriteComponent with HasGameReference<MainGame>, Collis
   bool heartInside = false;
 
   BreatheBox({required this.nervousValue}) : super(
-    size: Vector2(275, 100),
+    size: Vector2(800, 350),
     anchor: Anchor.center,
   );
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    position = Vector2(1 * game.size.x/2, game.size.y/2);
-    // print(position);
+
+    position = game.camera.visibleWorldRect.center.toVector2();
     
     sprite = await game.loadSprite('images.png');
 
-    add(RectangleHitbox());
+    add(RectangleHitbox(isSolid: true));
   }
 
   @override
@@ -52,7 +53,7 @@ class BreatheBox extends SpriteComponent with HasGameReference<MainGame>, Collis
     double x = dt * 100;
     dtPassed += x;
 
-    position.y = (0.3 * sin(dtPassed/90) + 0.5) * game.size.y;
+    position.y = (0.25 * sin(dtPassed/75)) * game.worldSize.y;
     if (heartInside) {
       nervousValue.value = clampDouble(nervousValue.value + 0.25 * dt, 0, 1);
     } else {

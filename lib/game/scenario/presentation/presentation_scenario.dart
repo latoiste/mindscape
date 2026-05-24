@@ -13,7 +13,13 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
   final ValueNotifier<double> nervousValue;
 
-  PresentationScenario({required super.timeSecond, required this.nervousValue});
+  PresentationScenario({
+    required super.timeSecond, 
+    required this.nervousValue
+  }) : super(
+    // backgroundPath: "feather."
+    backgroundPath: "scenario_1/background.png"
+  );
 
   @override
   Future<void> onLoad() async {
@@ -24,8 +30,8 @@ class PresentationScenario extends Scenario with TapCallbacks {
     heart = Heart();
     breatheBox = BreatheBox(nervousValue: nervousValue);
 
-    add(breatheBox);
-    add(heart);
+    game.world.add(breatheBox);
+    game.world.add(heart);
     game.overlays.add('NervousBar');
   }
 
@@ -44,7 +50,7 @@ class PresentationScenario extends Scenario with TapCallbacks {
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    heart.pushPower = 400;
+    heart.pushPower = 600;
     print("onTapDown called");
   }
 
@@ -70,8 +76,8 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
   @override
   void onRemove() {
-    remove(breatheBox);
-    remove(heart);
+    breatheBox.removeFromParent();
+    heart.removeFromParent();
 
     nervousValue.removeListener(onNervousValueChanged);
     

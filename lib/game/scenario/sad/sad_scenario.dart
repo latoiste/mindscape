@@ -13,7 +13,7 @@ class SadScenario extends Scenario {
   final ValueNotifier<Word?> wordSnapNotifier;
   int wordsSnapped;
 
-  SadScenario({required super.timeSecond}) :
+  SadScenario({required super.timeSecond, required super.backgroundPath}) :
     wordAmount = 5,
     wordSnapNotifier = ValueNotifier(null),
     wordsSnapped = 0;
