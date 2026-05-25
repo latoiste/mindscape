@@ -44,12 +44,12 @@ class SadScenario extends Scenario {
   }
 
   @override
-  void onLose() {
+  Future<void> onLose() async {
     // TODO: implement onLose
   }
 
   @override
-  void onWin() {
+  Future<void> onWin() async {
     // TODO: implement onWin
   }
 

@@ -5,7 +5,6 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
-import 'package:mindscape/game/scenario/sad/sad_scenario.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
 enum GameResult {
@@ -38,7 +37,8 @@ class MainGame extends FlameGame with HasCollisionDetection {
     );
 
     worldSize = camera.visibleWorldRect.size.toVector2();
-    
+    await preloadImages();
+
     startGame();
   }
 
@@ -99,16 +99,28 @@ class MainGame extends FlameGame with HasCollisionDetection {
     }
   }
 
-  void onGameEnd() {
+  Future<void> preloadImages() async{
+    await images.loadAll([
+      "scenario_1/breathing1.png",
+      "scenario_1/breathing2.png",
+      "scenario_1/idle.png",
+      "scenario_1/win.png",
+      "scenario_1/lose.png",
+    ]);
+  }
+
+  void onGameEnd() async {
     overlays.clear();
 
     switch (currentScenario.gameEndNotifier.value) {
       case GameResult.win:
-        currentScenario.onWin();
+        await currentScenario.onWin();
         win();
+        break;
       case GameResult.lose:
-        currentScenario.onLose();
+        await currentScenario.onLose();
         gameOver();
+        break;
       case GameResult.ongoing:
         return;
     }

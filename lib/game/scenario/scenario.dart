@@ -10,13 +10,19 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   final String backgroundPath;
   final ValueNotifier<double> timerNotifier;
   final ValueNotifier<GameResult> gameEndNotifier;
+  bool paused = false;
 
   Scenario({required this.timeSecond, required this.backgroundPath}) : 
     timerNotifier = ValueNotifier(timeSecond),
     gameEndNotifier = ValueNotifier(GameResult.ongoing);
 
-  void onWin();
-  void onLose();
+  Future<void> onWin() async {
+    paused = true;
+  }
+
+  Future<void> onLose() async {
+    paused = true;
+  }
   
   @override
   Future<void> onLoad() async {
@@ -38,7 +44,7 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   void update(double dt) {
     super.update(dt);
 
-    if (timerNotifier.value <= 0) {
+    if (paused || timerNotifier.value <= 0) {
       return;
     }
     timerNotifier.value = clampDouble(timerNotifier.value - dt, 0, timerNotifier.value);

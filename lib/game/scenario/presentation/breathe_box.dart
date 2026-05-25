@@ -55,9 +55,9 @@ class BreatheBox extends SpriteComponent with HasGameReference<MainGame>, Collis
 
     position.y = (0.25 * sin(dtPassed/75)) * game.worldSize.y;
     if (heartInside) {
-      nervousValue.value = clampDouble(nervousValue.value + 0.25 * dt, 0, 1);
+      nervousValue.value = clampDouble(nervousValue.value + 0.20 * dt, 0, 1);
     } else {
-      nervousValue.value = clampDouble(nervousValue.value - 0.5 * dt, 0, 1);
+      nervousValue.value = clampDouble(nervousValue.value - 0.45 * dt, 0, 1);
     }
   }
 }

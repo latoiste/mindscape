@@ -11,7 +11,7 @@ class Heart extends SpriteComponent with HasGameReference<MainGame> {
 
   Heart() : super (
     anchor: Anchor.center,
-    size: Vector2(350, 250),
+    size: Vector2(300, 200),
   );
 
   @override
