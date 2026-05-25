@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/main_menu.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
 void main() {
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Mindscape',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
-        fontFamily: GoogleFonts.fredoka().fontFamily,
+        fontFamily: 'SuperWarming',
 
         textTheme: const TextTheme(
           bodyMedium: TextStyle(color: Colors.white),

@@ -38,7 +38,6 @@ dependencies:
   provider: ^6.1.5+1
   http: ^1.6.0
   flutter_secure_storage: ^10.3.0
-  google_fonts: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +69,10 @@ flutter:
     - assets/images/ 
     - assets/images/scenario_1/
     - assets/images/scenario_2/
+  fonts:
+    - family: SuperWarming
+      fonts:
+        - asset: assets/fonts/Super-Warming.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
