@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/main_menu.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mindscape/main_menu.dart';
+import 'package:mindscape/styles/button_styles.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mindscape',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        fontFamily: GoogleFonts.fredoka().fontFamily,
+
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Colors.white),
+        ),
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: primaryButtonStyle,
+        ),
+      ),
       home: const MainMenu(),
     );
   }

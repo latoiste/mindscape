@@ -2,6 +2,7 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/presentation/breathe_box.dart';
+import 'package:mindscape/game/scenario/presentation/child.dart';
 import 'package:mindscape/game/scenario/presentation/heart.dart';
 import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
@@ -10,10 +11,17 @@ class PresentationScenario extends Scenario with TapCallbacks {
   late final Heart heart;
   late final BreatheBox breatheBox;
   late final NervousBar nervousBar;
+  late final Child child;
+  bool isOnBreathing2 = false;
 
   final ValueNotifier<double> nervousValue;
 
-  PresentationScenario({required super.timeSecond, required this.nervousValue});
+  PresentationScenario({
+    required super.timeSecond, 
+    required this.nervousValue
+  }) : super(
+    backgroundPath: "scenario_1/background.png"
+  );
 
   @override
   Future<void> onLoad() async {
@@ -23,28 +31,35 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
     heart = Heart();
     breatheBox = BreatheBox(nervousValue: nervousValue);
+    child = Child();
 
-    add(breatheBox);
-    add(heart);
+    await game.world.add(breatheBox);
+    await game.world.add(heart);
+    await game.world.add(child);
     game.overlays.add('NervousBar');
   }
 
   @override
-  void onLose() {
-    // TODO: implement onFail
-    // Play losing animaton??
+  Future<void> onLose() async {
+    super.onLose();
+
+    child.changeAnimation("lose");
+    await Future.delayed(Duration(seconds: 5));
   }
 
   @override
-  void onWin() {
-    // TODO: implement onWin
-    // Play winning animation
+  Future<void> onWin() async {
+    super.onWin();
+
+    
+    child.changeAnimation("win");
+    await Future.delayed(Duration(seconds: 5));
   }
   
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    heart.pushPower = 400;
+    heart.pushPower = 600;
     print("onTapDown called");
   }
 
@@ -63,6 +78,11 @@ class PresentationScenario extends Scenario with TapCallbacks {
   }
 
   void onNervousValueChanged() {
+    if (!isOnBreathing2 && nervousValue.value >= 0.50) {
+      isOnBreathing2 = true;
+      child.changeAnimation("breathing2");
+    }
+
     if (nervousValue.value >= 1) {
       super.gameEndNotifier.value = GameResult.win;
     }
@@ -70,8 +90,9 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
   @override
   void onRemove() {
-    remove(breatheBox);
-    remove(heart);
+    breatheBox.removeFromParent();
+    heart.removeFromParent();
+    child.removeFromParent();
 
     nervousValue.removeListener(onNervousValueChanged);
     

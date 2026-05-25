@@ -14,18 +14,23 @@ class MainMenu extends StatelessWidget {
 
     return Scaffold (
       backgroundColor: Colors.black,
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/main_menu.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
         child: Column(
-          spacing: 50,
+          spacing: screenHeight * 0.05,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Mindscape", 
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: screenHeight * 0.15,
-                fontWeight: FontWeight.w700,
-              ),
+            Image.asset(
+              "images/title.png",
+              height: screenHeight * 0.25,
+              fit: BoxFit.cover,
             ),
             auth.loggedIn ?
             LoggedInMenu() :

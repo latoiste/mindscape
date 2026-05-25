@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mindscape/dialogs/login_dialog.dart';
 import 'package:mindscape/dialogs/resgiter_dialog.dart';
 import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/styles/text_styles.dart';
 
 class LoggedOutMenu extends StatelessWidget {
   const LoggedOutMenu({super.key});
@@ -19,7 +20,10 @@ class LoggedOutMenu extends StatelessWidget {
         children: [
           ElevatedButton(
             style: primaryButtonStyle,
-            child: const Text("Login"),
+            child: Text(
+              "Login",
+              style: menuTextStyle,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -29,7 +33,10 @@ class LoggedOutMenu extends StatelessWidget {
           ),
           ElevatedButton(
             style: primaryButtonStyle,
-            child: const Text("Register"),
+            child: Text(
+              "Register",
+              style: menuTextStyle,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -39,7 +46,10 @@ class LoggedOutMenu extends StatelessWidget {
           ),
           ElevatedButton(
             style: primaryButtonStyle,
-            child: const Text("Quit"),
+            child: Text(
+              "Quit",
+              style: menuTextStyle,
+            ),
             onPressed: () {}
           ),
         ]
