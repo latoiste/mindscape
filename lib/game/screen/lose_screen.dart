@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/styles/text_styles.dart';
 
 class LoseScreen extends StatelessWidget {
   final int score;
@@ -11,38 +12,56 @@ class LoseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 194, 192),
       body: Center(
         child: Column(
           children: [
           Text(
             "Game Over",
             style: TextStyle(
-              fontSize: screenHeight * 0.2
+              fontSize: screenHeight * 0.2,
+              fontWeight: FontWeight.w900
             ),
           ),
           Text(
             "Score: $score",
             style: TextStyle(
-              fontSize: screenHeight * 0.1
+              fontSize: screenHeight * 0.1,
+              fontWeight: FontWeight.w700
             ),
           ),
-          ElevatedButton(
-            style: primaryButtonStyle,
-            child: const Text("Play Again"),
-            onPressed: () {
-              game.overlays.remove('LoseScreen');
-              game.startGame();
-            }
-          ),
-          ElevatedButton(
-            style: primaryButtonStyle,
-            child: const Text("Back to Main Menu"),
-            onPressed: () {
-              Navigator.popUntil(context, (route) => route.isFirst);
-            }
-          ),],
+          SizedBox(
+            width: screenWidth * 0.2,
+            child: Column(
+              spacing: 20,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  style: primaryButtonStyle,
+                  child: Text(
+                    "Play Again",
+                    style: menuTextStyle,
+                  ),
+                  onPressed: () {
+                    game.overlays.remove('LoseScreen');
+                    game.startGame();
+                  }
+                ),
+                ElevatedButton(
+                  style: primaryButtonStyle,
+                  child: Text(
+                    "Back to Main Menu",
+                    style: menuTextStyle,
+                  ),
+                  onPressed: () {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
+                ),
+              ],)
+          ),]
         ),
       ),
     );

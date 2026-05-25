@@ -12,13 +12,15 @@ class WinScreen extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 194, 192),
       body: Center(
         child: Column(
           children: [
           Text(
-            "You Win",
+            "Ready?",
             style: TextStyle(
-              fontSize: screenHeight * 0.2
+              fontSize: screenHeight * 0.2,
+              fontWeight: FontWeight.w900,
             ),
           ),
           Countdown(
