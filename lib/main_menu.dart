@@ -5,7 +5,7 @@ import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
 import 'package:mindscape/game/screen/lose_screen.dart';
 import 'package:mindscape/game/screen/win_screen.dart';
 import 'package:mindscape/game/ui/timer_display.dart';
-import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/styles/text_styles.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -17,18 +17,23 @@ class MainMenu extends StatelessWidget {
 
     return Scaffold (
       backgroundColor: Colors.black,
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/main_menu.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
         child: Column(
-          spacing: 50,
+          spacing: screenHeight * 0.05,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Mindscape", 
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: screenHeight * 0.15,
-                fontWeight: FontWeight.w700,
-              ),
+            Image.asset(
+              "images/title.png",
+              height: screenHeight * 0.25,
+              fit: BoxFit.cover,
             ),
             SizedBox(
               width: screenWidth * 0.3,
@@ -37,8 +42,10 @@ class MainMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Play"),
+                    child: Text(
+                      "Play",
+                      style: menuTextStyle,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context, 
@@ -55,18 +62,24 @@ class MainMenu extends StatelessWidget {
                     }
                   ),
                   ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Options"),
+                    child: Text(
+                      "Options",
+                      style: menuTextStyle,
+                    ),
                     onPressed: () {}
                   ),
                   ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Credits"),
+                    child: Text(
+                      "Credits",
+                      style: menuTextStyle,
+                    ),
                     onPressed: () {}
                   ),
                   ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Quit"),
+                    child: Text(
+                      "Quit",
+                      style: menuTextStyle,
+                    ),
                     onPressed: () {}
                   ),
                 ]
