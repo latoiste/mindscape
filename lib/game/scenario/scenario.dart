@@ -23,6 +23,8 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   Future<void> onLose() async {
     paused = true;
   }
+
+  void onGameEnd();
   
   @override
   Future<void> onLoad() async {
@@ -38,6 +40,8 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
 
     await game.world.add(background);
     game.overlays.add('TimerDisplay');
+
+    gameEndNotifier.addListener(onGameEnd);
   }
 
   @override

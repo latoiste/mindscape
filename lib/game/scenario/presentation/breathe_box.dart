@@ -24,7 +24,9 @@ class BreatheBox extends SpriteComponent with HasGameReference<MainGame>, Collis
 
     position = game.camera.visibleWorldRect.center.toVector2();
     
-    sprite = await game.loadSprite('images.png');
+    sprite = await game.loadSprite('scenario_1/breathe_box.png');
+
+    setOpacity(0.5);
 
     add(RectangleHitbox(isSolid: true));
   }

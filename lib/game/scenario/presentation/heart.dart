@@ -11,14 +11,14 @@ class Heart extends SpriteComponent with HasGameReference<MainGame> {
 
   Heart() : super (
     anchor: Anchor.center,
-    size: Vector2(300, 200),
+    size: Vector2(300, 250),
   );
 
   @override
   Future<void> onLoad() async{
     await super.onLoad();
 
-    sprite = await game.loadSprite('heart.png');
+    sprite = await game.loadSprite('scenario_1/heart.png');
 
     position = game.camera.visibleWorldRect.center.toVector2();
 
