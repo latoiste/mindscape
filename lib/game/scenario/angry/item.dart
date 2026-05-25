@@ -6,6 +6,8 @@ import 'package:flame/events.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mindscape/game/main_game.dart';
 
+enum Items { bowl, ipad, vase, doll, pillow, paper }
+
 class Item extends SpriteComponent with HasGameReference<MainGame>, DragCallbacks {
   final String spritePath;
   final bool safeToBreak;
@@ -20,7 +22,7 @@ class Item extends SpriteComponent with HasGameReference<MainGame>, DragCallback
     required this.childItemNotifier}) : 
     super(
       anchor: Anchor.center,
-      size: Vector2(100, 150),
+      size: Vector2(250, 250),
     );
 
   @override
@@ -29,13 +31,14 @@ class Item extends SpriteComponent with HasGameReference<MainGame>, DragCallback
 
     position = originalPosition.clone();
 
-    sprite = await game.loadSprite(spritePath);
+    final image = game.images.fromCache(spritePath);
+    
+    sprite = Sprite(image);
 
     add(RectangleHitbox(collisionType: CollisionType.passive, isSolid: true));
   }
 
   void onGivenToChild() {
-    // TODO: make this async and await play animation
     print("item given");
     removeFromParent();
   }
@@ -44,7 +47,7 @@ class Item extends SpriteComponent with HasGameReference<MainGame>, DragCallback
   void onDragUpdate(DragUpdateEvent event) {
     super.onDragUpdate(event);
 
-    position += event.canvasDelta;
+    position += event.localDelta;
   }
 
   @override

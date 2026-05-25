@@ -69,6 +69,7 @@ flutter:
     - assets/images/ 
     - assets/images/scenario_1/
     - assets/images/scenario_2/
+    - assets/images/scenario_3/
   fonts:
     - family: SuperWarming
       fonts:

@@ -16,6 +16,11 @@ class ImpatientScenario extends Scenario with TapCallbacks {
     super.onWin();
     // TODO: implement onWin
   }
+
+  @override
+  void onGameEnd() {
+    // TODO: implement onGameEnd
+  }
   
   @override
   void onTapDown(TapDownEvent event) {

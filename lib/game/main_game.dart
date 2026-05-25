@@ -33,12 +33,6 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async {
-<<<<<<< HEAD
-    // startGame();
-
-    currentScenario = AngryScenario(timeSecond: 10);
-    switchScenario(newScenario: currentScenario);
-=======
     camera = CameraComponent.withFixedResolution(
       width: 1920,
       height: 1080,
@@ -48,7 +42,6 @@ class MainGame extends FlameGame with HasCollisionDetection {
     await preloadImages();
 
     startGame();
->>>>>>> main
   }
 
   void startGame() {
@@ -99,29 +92,14 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
     switch (index) {
       case 0:
-        return SadScenario(timeSecond: 10);
+        return AngryScenario(timeSecond: 1500);
       case 1:
+        return SadScenario(timeSecond: 10);
+      case 2:
       default: // ini biar bisa return non nullable
         nervousValue.value = 0;
         return PresentationScenario(nervousValue: nervousValue, timeSecond: 10);
     }
-  }
-
-  Future<void> preloadImages() async{
-    await images.loadAll([
-      "scenario_1/breathing1.png",
-      "scenario_1/breathing2.png",
-      "scenario_1/idle.png",
-      "scenario_1/win.png",
-      "scenario_1/lose.png",
-
-      "scenario_2/background.png",
-      "scenario_2/background2.png",
-      "scenario_2/bubble.png",
-      "scenario_2/win.png",
-      "scenario_2/lose.png",
-      "scenario_2/idle.png",
-    ]);
   }
 
   void onGameEnd() async {
@@ -148,5 +126,40 @@ class MainGame extends FlameGame with HasCollisionDetection {
     currentScenario.gameEndNotifier.removeListener(onGameEnd);
 
     super.onRemove();
+  }
+
+  Future<void> preloadImages() async{
+    await images.loadAll([
+      "scenario_1/breathing1.png",
+      "scenario_1/breathing2.png",
+      "scenario_1/idle.png",
+      "scenario_1/win.png",
+      "scenario_1/lose.png",
+
+      "scenario_2/background.png",
+      "scenario_2/background2.png",
+      "scenario_2/bubble.png",
+      "scenario_2/win.png",
+      "scenario_2/lose.png",
+      "scenario_2/idle.png",
+
+      "scenario_3/background.png",
+      "scenario_3/enter_doll.png",
+      "scenario_3/enter_paper.png",
+      "scenario_3/enter_pillow.png",
+      "scenario_3/idle_1.png",
+      "scenario_3/idle_2.png",
+      "scenario_3/idle_3.png",
+      "scenario_3/lose_bowl.png",
+      "scenario_3/lose_ipad.png",
+      "scenario_3/lose_vase.png",
+      "scenario_3/win.png",
+      "scenario_3/bowl.png",
+      "scenario_3/vase.png",
+      "scenario_3/ipad.png",
+      "scenario_3/doll.png",
+      "scenario_3/paper.png",
+      "scenario_3/pillow.png",
+    ]);
   }
 }
