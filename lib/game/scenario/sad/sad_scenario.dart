@@ -13,7 +13,7 @@ class SadScenario extends Scenario {
   final ValueNotifier<Word?> wordSnapNotifier;
   int wordsSnapped;
 
-  SadScenario({required super.timeSecond}) :
+  SadScenario({required super.timeSecond, required super.backgroundPath}) :
     wordAmount = 5,
     wordSnapNotifier = ValueNotifier(null),
     wordsSnapped = 0;
@@ -44,12 +44,12 @@ class SadScenario extends Scenario {
   }
 
   @override
-  void onLose() {
+  Future<void> onLose() async {
     // TODO: implement onLose
   }
 
   @override
-  void onWin() {
+  Future<void> onWin() async {
     // TODO: implement onWin
   }
 

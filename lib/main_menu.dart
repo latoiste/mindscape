@@ -1,77 +1,40 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:mindscape/game/main_game.dart';
-import 'package:mindscape/game/scenario/presentation/nervous_bar.dart';
-import 'package:mindscape/game/screen/lose_screen.dart';
-import 'package:mindscape/game/screen/win_screen.dart';
-import 'package:mindscape/game/ui/timer_display.dart';
-import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/auth/auth_provider.dart';
+import 'package:mindscape/logged_in_menu.dart';
+import 'package:mindscape/logged_out_menu.dart';
+import 'package:provider/provider.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    final auth = context.watch<AuthProvider>();
 
     return Scaffold (
       backgroundColor: Colors.black,
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/main_menu.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
         child: Column(
-          spacing: 50,
+          spacing: screenHeight * 0.05,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Mindscape", 
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: screenHeight * 0.15,
-                fontWeight: FontWeight.w700,
-              ),
+            Image.asset(
+              "images/title.png",
+              height: screenHeight * 0.25,
+              fit: BoxFit.cover,
             ),
-            SizedBox(
-              width: screenWidth * 0.3,
-              child: Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Play"),
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => GameWidget(
-                          game: MainGame(),
-                          overlayBuilderMap: {
-                            "NervousBar": (context, MainGame game) => NervousBar(nervousValue: game.nervousValue),
-                            "TimerDisplay": (context, MainGame game) => TimerDisplay(timeSecond: game.currentScenario.timerNotifier),
-                            "LoseScreen": (context, MainGame game) => LoseScreen(score: game.score, game: game),
-                            "WinScreen": (context, MainGame game) => WinScreen(game: game),
-                          },
-                        )),
-                      );
-                    }
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Options"),
-                    onPressed: () {}
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Credits"),
-                    onPressed: () {}
-                  ),
-                  ElevatedButton(
-                    style: primaryButtonStyle,
-                    child: const Text("Quit"),
-                    onPressed: () {}
-                  ),
-                ]
-              ),
-            )
+            auth.loggedIn ?
+            LoggedInMenu() :
+            LoggedOutMenu()
           ],
         ),
       ),
