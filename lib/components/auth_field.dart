@@ -14,17 +14,20 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.grey[200],
-        hintText: placeholder,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12)
+    return SizedBox(
+      height: 60,
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey[200],
+          hintText: placeholder,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12)
+          ),
         ),
+        validator: validator
       ),
-      validator: validator
     );
   }
 }

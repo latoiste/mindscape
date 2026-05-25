@@ -4,7 +4,6 @@ import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/main_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mindscape/main_menu.dart';
 import 'package:mindscape/styles/button_styles.dart';
 
 void main() {

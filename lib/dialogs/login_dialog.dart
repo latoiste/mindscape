@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mindscape/components/auth_field.dart';
-import 'package:mindscape/components/auth_form.dart';
-import 'package:mindscape/styles/button_styles.dart';
+import 'package:mindscape/api/auth.dart';
+import 'package:mindscape/dialogs/auth_dialog.dart';
 
 class LoginDialog extends StatefulWidget {
   const LoginDialog({super.key});
@@ -17,84 +16,31 @@ class _LoginDialogState extends State<LoginDialog> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   ValueNotifier<bool> canPress = ValueNotifier(true);
+  String? authError;
 
-  Future<void> onPressed() async {
+  Future<bool> onSubmit(String username, String password) async {
     if (!formKey.currentState!.validate()) {
-      return;
+      return false;
     }
-    canPress.value = false;
 
-    // TODO: call backend
-    await Future.delayed(Duration(seconds: 2));
-    
-    canPress.value = true;
+    final errorMsg = await loginAuth(username, password);
+    setState(() {
+      authError = errorMsg;
+    });
+
+    return errorMsg == null;
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return AlertDialog(
-      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
-      title: Text(
-        "Login", 
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: screenHeight * 0.1,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      content: SizedBox(
-        width: screenWidth * 0.3,
-        height: screenHeight * 0.9,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: screenHeight * 0.05,
-          children: [
-            AuthForm(
-              formKey: formKey, 
-              fields: [
-                InputField(
-                  controller: usernameController, 
-                  placeholder: "Username",
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Username cannot be empty';
-                    }
-                    return null; 
-                  },
-                ),
-                InputField(
-                  controller: passwordController, 
-                  placeholder: "Password",
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Password cannot be empty';
-                    }
-                    return null; 
-                  }
-                ),
-              ]
-            ),
-            ValueListenableBuilder(
-              valueListenable: canPress, 
-              builder: (context, value, _) => 
-                ElevatedButton (
-                  onPressed: canPress.value ? onPressed : null, 
-                  style: primaryButtonStyle,
-                  child: canPress.value ? 
-                    Text("Login") :
-                    SizedBox(
-                      height: 18,
-                      width: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2)
-                    )
-                )
-            ),
-          ],
-        )
-      )
+    return AuthDialolg(
+      title: "Login", 
+      authError: authError,
+      formKey: formKey, 
+      canPress: canPress, 
+      usernameController: usernameController, 
+      passwordController: passwordController, 
+      onSubmit: onSubmit,
     );
   }
 
