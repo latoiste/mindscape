@@ -64,6 +64,8 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
 
   @override
   void onRemove() {
+    gameEndNotifier.removeListener(onGameEnd);
+
     timerNotifier.dispose();
     gameEndNotifier.dispose();
   }

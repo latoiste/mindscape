@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/angry/item.dart';
 
@@ -29,8 +30,10 @@ class Child extends SpriteAnimationGroupComponent<State> with HasGameReference<M
   late final SpriteAnimation enterDoll;
   late final SpriteAnimation enterPillow;
   late final SpriteAnimation win;
+  final ValueNotifier<Item?> childItemNotifier;
+  int angryStage = 1;
 
-  Child() : super(
+  Child({required this.childItemNotifier}) : super(
     anchor: Anchor.center,
     size: Vector2(1440, 810)
   );
@@ -50,6 +53,40 @@ class Child extends SpriteAnimationGroupComponent<State> with HasGameReference<M
     );
     await prepareAnimations();
     current = State.idle1;
+  }
+
+  Future<void> onReceiveItem() async {
+    Item item = childItemNotifier.value!;
+    angryStage++;
+
+    if (!item.safeToBreak) return;
+
+    switch (angryStage) {
+      case 1:
+        changeAnimation(State.idle1);
+        break;
+      case 2:
+        changeAnimation(State.idle2);
+        break;
+      case 3:
+        changeAnimation(State.idle3);
+        break;
+    }
+  }
+
+  void playLoseAnimation(Item item) {
+    switch (item.type) {
+      case ItemType.bowl:
+        changeAnimation(State.loseBowl);
+        break;
+      case ItemType.ipad:
+        changeAnimation(State.loseIpad);
+        break;
+      case ItemType.vase:
+        changeAnimation(State.loseVase);
+        break;
+      default:
+    }
   }
 
   @override
@@ -76,6 +113,10 @@ class Child extends SpriteAnimationGroupComponent<State> with HasGameReference<M
       print("outside");
       other.insideChildCollision = false;
     }
+  }
+
+  void changeAnimation(State state) {
+    current = state;
   }
 
   Future<void> prepareAnimations() async {
@@ -175,7 +216,7 @@ class Child extends SpriteAnimationGroupComponent<State> with HasGameReference<M
         amount: 43, 
         stepTime: .05, 
         loop: false,
-        textureSize: Vector2(1280, 720),
+        textureSize: Vector2(640, 360),
         amountPerRow: 7,
       )
     );

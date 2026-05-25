@@ -6,20 +6,23 @@ import 'package:flame/events.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mindscape/game/main_game.dart';
 
-enum Items { bowl, ipad, vase, doll, pillow, paper }
+enum ItemType { bowl, ipad, vase, doll, pillow, paper }
 
 class Item extends SpriteComponent with HasGameReference<MainGame>, DragCallbacks {
   final String spritePath;
   final bool safeToBreak;
   final Vector2 originalPosition;
   final ValueNotifier<Item?> childItemNotifier;
+  late final ItemType type;
   bool insideChildCollision = false;
 
   Item({
+    required this.type,
     required this.spritePath, 
     required this.safeToBreak, 
     required this.originalPosition,
-    required this.childItemNotifier}) : 
+    required this.childItemNotifier,
+  }) : 
     super(
       anchor: Anchor.center,
       size: Vector2(250, 250),
