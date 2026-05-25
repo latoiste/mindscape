@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mindscape/dialogs/login_dialog.dart';
+import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/game/mindscape.dart';
 import 'package:mindscape/styles/button_styles.dart';
 import 'package:mindscape/styles/text_styles.dart';
+import 'package:provider/provider.dart';
 
 class LoggedInMenu extends StatelessWidget {
   const LoggedInMenu({super.key});
@@ -38,10 +39,7 @@ class LoggedInMenu extends StatelessWidget {
               style: menuTextStyle,
             ),
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => LoginDialog(),
-              );
+              context.read<AuthProvider>().logout();
             }
           ),
           ElevatedButton(

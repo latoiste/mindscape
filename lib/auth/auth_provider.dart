@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindscape/auth/storage_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool loggedIn = false;
@@ -10,6 +11,7 @@ class AuthProvider extends ChangeNotifier {
 
   void logout() {
     loggedIn = false;
+    StorageService.instance.deleteToken();
     notifyListeners();
   }
 }
