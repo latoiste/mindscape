@@ -14,7 +14,7 @@ class Word extends SpriteComponent with HasGameReference<MainGame>, DragCallback
 
   Word({required this.originalPosition, required this.wordSnapNotifier}) : super (
     anchor: Anchor.center,
-    size: Vector2(60, 20),
+    size: Vector2(240, 200),
   );
   
   @override
@@ -23,7 +23,7 @@ class Word extends SpriteComponent with HasGameReference<MainGame>, DragCallback
 
     position = originalPosition.clone();
 
-    sprite = await game.loadSprite('images.png');
+    sprite = await game.loadSprite('scenario_2/scribbles.png');
 
     add(RectangleHitbox(collisionType: CollisionType.passive));
   }
@@ -33,7 +33,7 @@ class Word extends SpriteComponent with HasGameReference<MainGame>, DragCallback
     super.onDragUpdate(event);
 
     if (draggable) {
-      position += event.canvasDelta;
+      position += event.localDelta;
     }
   }
 

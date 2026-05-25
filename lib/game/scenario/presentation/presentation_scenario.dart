@@ -55,6 +55,12 @@ class PresentationScenario extends Scenario with TapCallbacks {
     child.changeAnimation("win");
     await Future.delayed(Duration(seconds: 5));
   }
+
+  @override
+  void onGameEnd() {
+    breatheBox.removeFromParent();
+    heart.removeFromParent();
+  }
   
   @override
   void onTapDown(TapDownEvent event) {
@@ -90,9 +96,9 @@ class PresentationScenario extends Scenario with TapCallbacks {
 
   @override
   void onRemove() {
-    breatheBox.removeFromParent();
-    heart.removeFromParent();
-    child.removeFromParent();
+    if (breatheBox.parent != null) breatheBox.removeFromParent();
+    if (heart.parent != null) heart.removeFromParent();
+    if (child.parent != null) child.removeFromParent();
 
     nervousValue.removeListener(onNervousValueChanged);
     

@@ -5,6 +5,7 @@ import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
+import 'package:mindscape/game/scenario/sad/sad_scenario.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
 enum GameResult {
@@ -89,12 +90,11 @@ class MainGame extends FlameGame with HasCollisionDetection {
     prevIndex = index;
 
     switch (index) {
-      // case 0:
-      //   return SadScenario(timeSecond: 50, backgroundPath: "");
       case 0:
+        return SadScenario(timeSecond: 10);
+      case 1:
       default: // ini biar bisa return non nullable
         nervousValue.value = 0;
-        // TODO: bikin timeSecond dynamic
         return PresentationScenario(nervousValue: nervousValue, timeSecond: 10);
     }
   }
@@ -106,6 +106,13 @@ class MainGame extends FlameGame with HasCollisionDetection {
       "scenario_1/idle.png",
       "scenario_1/win.png",
       "scenario_1/lose.png",
+
+      "scenario_2/background.png",
+      "scenario_2/background2.png",
+      "scenario_2/bubble.png",
+      "scenario_2/win.png",
+      "scenario_2/lose.png",
+      "scenario_2/idle.png",
     ]);
   }
 
