@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindscape/api/score.dart';
 import 'package:mindscape/auth/auth_provider.dart';
 import 'package:mindscape/game/mindscape.dart';
 import 'package:mindscape/styles/button_styles.dart';
@@ -19,6 +20,34 @@ class LoggedInMenu extends StatelessWidget {
         spacing: screenHeight * 0.025,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Center(
+            child: FutureBuilder(
+              future: getHighscore(), 
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+
+                final (success, highscore) = snapshot.data!;
+
+                if (!success) {
+                  return Text(
+                    "Highscore: N/A",
+                    style: menuTextStyle.copyWith(
+                      fontSize: 24,
+                    ),
+                  );
+                }
+
+                return Text(
+                  "Highscore: $highscore",
+                  style: menuTextStyle.copyWith(
+                    fontSize: 24,
+                  ),
+                );
+              }
+            ),
+          ),
           ElevatedButton(
             style: primaryButtonStyle,
             child: Text(

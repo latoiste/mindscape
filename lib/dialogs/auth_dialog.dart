@@ -59,6 +59,7 @@ class AuthDialolg extends StatelessWidget {
               formKey: formKey, 
               fields: [
                 InputField(
+                  obscureText: false,
                   controller: usernameController, 
                   placeholder: "Username",
                   validator: (value) {
@@ -69,6 +70,7 @@ class AuthDialolg extends StatelessWidget {
                   },
                 ),
                 InputField(
+                  obscureText: true,
                   controller: passwordController, 
                   placeholder: "Password",
                   validator: (value) {

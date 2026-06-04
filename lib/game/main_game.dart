@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:mindscape/api/score.dart';
 import 'package:mindscape/game/scenario/angry/angry_scenario.dart';
 import 'package:mindscape/game/scenario/presentation/presentation_scenario.dart';
 import 'package:mindscape/game/scenario/sad/sad_scenario.dart';
@@ -25,7 +26,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
   final ValueNotifier<double> nervousValue = ValueNotifier(0);
   // ====================
 
-  static const int scenarioAmount = 1;
+  static const int scenarioAmount = 3;
 
   @override
   // ignore: overridden_fields
@@ -70,6 +71,8 @@ class MainGame extends FlameGame with HasCollisionDetection {
     pauseEngine();
     currentScenario.removeFromParent();
     overlays.add('LoseScreen');
+
+    updateHighscore(score);
   }
 
   void switchScenario({Scenario? oldScenario, required Scenario newScenario}) {
@@ -92,7 +95,7 @@ class MainGame extends FlameGame with HasCollisionDetection {
 
     switch (index) {
       case 0:
-        return AngryScenario(timeSecond: 1500);
+        return AngryScenario(timeSecond: 10);
       case 1:
         return SadScenario(timeSecond: 10);
       case 2:
