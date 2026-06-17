@@ -47,7 +47,6 @@ class _CountdownState extends State<Countdown> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }
@@ -59,7 +58,7 @@ class _CountdownState extends State<Countdown> {
     return Text(
       "$secondsRemaining",
       style: TextStyle(
-        fontSize: screenHeight * 0.4,
+        fontSize: screenHeight * 0.35,
         fontWeight: FontWeight.bold,
       ),
     );

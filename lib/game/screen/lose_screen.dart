@@ -47,7 +47,7 @@ class LoseScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     game.overlays.remove('LoseScreen');
-                    game.startGame();
+                    game.countdownScreen();
                   }
                 ),
                 ElevatedButton(

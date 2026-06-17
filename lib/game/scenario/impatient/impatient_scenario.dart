@@ -3,7 +3,7 @@ import 'package:mindscape/game/main_game.dart';
 import 'package:mindscape/game/scenario/scenario.dart';
 
 class ImpatientScenario extends Scenario with TapCallbacks {
-  ImpatientScenario({required super.timeSecond, required super.backgroundPath});
+  ImpatientScenario({required super.timeSecond, required super.backgroundPath, required super.splashText});
 
   @override
   Future<void> onLose() async {

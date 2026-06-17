@@ -21,7 +21,8 @@ class SadScenario extends Scenario {
     wordSnapNotifier = ValueNotifier(null),
     wordsSnapped = 0, 
     super(
-      backgroundPath: "scenario_2/background.png"
+      backgroundPath: "scenario_2/background.png",
+      splashText: "Drag the sad words into the notebook"
     );
 
   @override

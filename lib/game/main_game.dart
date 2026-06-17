@@ -19,8 +19,11 @@ enum GameResult {
 class MainGame extends FlameGame with HasCollisionDetection {
   int score = 0;
   int prevIndex = -1;
+  late Scenario? oldScenario;
   late Scenario currentScenario;
   late final Vector2 worldSize;
+
+  Future<void>? imagePreloadOp;
 
   // overlay builder maps dependencies
   final ValueNotifier<double> nervousValue = ValueNotifier(0);
@@ -40,35 +43,52 @@ class MainGame extends FlameGame with HasCollisionDetection {
     );
 
     worldSize = camera.visibleWorldRect.size.toVector2();
-    await preloadImages();
+    gameEntrypoint();
 
-    startGame();
+    imagePreloadOp = preloadImages();
   }
 
-  void startGame() {
+  void gameEntrypoint() {
     score = 0;
+    oldScenario = null;
+    pauseEngine();
 
+    countdownScreen();
+  }
+
+  void countdownScreen() async {
     currentScenario = getRandomScenario();
-    switchScenario(newScenario: currentScenario);
+    overlays.add('CountdownScreen');
+    await imagePreloadOp;
+  }
+
+  void startScenario() {
+    // not first scenario
+    if (oldScenario != null) {
+      switchScenario(oldScenario: oldScenario, newScenario: currentScenario);
+    } 
+    // first scenario
+    else {
+      switchScenario(newScenario: currentScenario);
+    }
     resumeEngine();
   }
 
   void win() {
     score++;
     pauseEngine();
-    overlays.add('WinScreen');
-  }
 
-  void nextScenario() {
     Scenario newScenario = getRandomScenario();
-    switchScenario(oldScenario: currentScenario, newScenario: newScenario);
+    oldScenario = currentScenario;
     currentScenario = newScenario;
 
-    resumeEngine();
+    overlays.add('CountdownScreen');
   }
 
   void gameOver() {
     pauseEngine();
+
+    currentScenario.gameEndNotifier.removeListener(onGameEnd);
     currentScenario.removeFromParent();
     overlays.add('LoseScreen');
 

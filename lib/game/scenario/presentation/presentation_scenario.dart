@@ -20,7 +20,8 @@ class PresentationScenario extends Scenario with TapCallbacks {
     required super.timeSecond, 
     required this.nervousValue
   }) : super(
-    backgroundPath: "scenario_1/background.png"
+    backgroundPath: "scenario_1/background.png",
+    splashText: "Keep the heart inside the box"
   );
 
   @override

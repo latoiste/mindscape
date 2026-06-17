@@ -10,9 +10,14 @@ abstract class Scenario extends PositionComponent with HasGameReference<MainGame
   final String backgroundPath;
   final ValueNotifier<double> timerNotifier;
   final ValueNotifier<GameResult> gameEndNotifier;
+  final String splashText;
   bool paused = false;
 
-  Scenario({required this.timeSecond, required this.backgroundPath}) : 
+  Scenario({
+    required this.timeSecond, 
+    required this.backgroundPath, 
+    required this.splashText
+  }) : 
     timerNotifier = ValueNotifier(timeSecond),
     gameEndNotifier = ValueNotifier(GameResult.ongoing);
 

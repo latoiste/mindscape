@@ -29,6 +29,7 @@ class AngryScenario extends Scenario {
     childItemNotifier = ValueNotifier(null),
     super (
       backgroundPath: "scenario_3/background.png",
+      splashText: "Drag the soft objects to the child"
     );
 
   @override
